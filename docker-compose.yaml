@@ -1,0 +1,26 @@
+version: "3"
+services:
+  db:
+    image: postgres
+    container_name: url_short_db
+    environment:
+      POSTGRES_PASSWORD: 123456789
+      POSTGRES_USER: sogan
+      POSTGRES_DB: urlshortdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+  app:
+    image: my-node-app1
+    environment:
+      DATABASE_HOST: db
+      DATABASE_PORT: 5432
+      DATABASE_USER: sogan
+      DATABASE_PASSWORD: 123456789
+      DATABASE_NAME: urlshortdb
+    depends_on:
+      - db
+
+volumes:
+  pgdata:
